@@ -1,6 +1,6 @@
 ---
 tags: [guitar, production, ableton, reason, signal-chain, template]
-date: 2026-07-19
+date: 2026-07-20
 title: Master Modular Guitar Rig Architecture
 ---
 
@@ -14,14 +14,14 @@ A comprehensive, low-overhead signal routing blueprint designed for Ableton Live
 
 * **Multi-Core Distribution:** Utilizing separate plugin instances for major blocks allows Ableton Live to distribute processing across multiple CPU cores rather than bottlenecking a single thread.
 * **Hard Deactivation:** Using device/rack deactivation (bypassing via Ableton's rack toggles) drops idle CPU cycles to zero when modules are not in use.
-* **Emulated FX Loop Routing:** Pre-amp pedals and filters sit before the core amplification stage, while time-based and modulation effects sit post-cab to preserve articulation and avoid low-end mud.
+* **Parallel Modulation Routing:** Modulation effects are housed in isolated parallel nested racks to prevent phase smearing and give independent dry/wet crossfade control.
 
 ---
 
 ## 2. Complete Signal Flow Architecture
 
 ```text
-[Input: DI Guitar (Active Pickups)]
+[Input: DI Guitar Interface Input]
     │
     ▼
 ┌────────────────────────────────────────────────────────┐
@@ -69,10 +69,15 @@ A comprehensive, low-overhead signal routing blueprint designed for Ableton Live
     │
     ▼
 ┌────────────────────────────────────────────────────────┐
-│ 7. MODULATION                                          │
-│    • Reason CF-101 (Chorus / Flanger)                  │
-│    • Reason PH-90 (Phaser)                             │
-│    *Role: Studio-grade post-amp modulation.            │
+│ 7. MODULATION (Parallel Nested Racks)                  │
+│    ├── Chain A: Chorus/Flanger Group                   │
+│    │    └── Nested Rack: CF-101 (100% Wet) // Empty    │
+│    │         (Controlled by 'CF Mix' Macro Crossfade)  │
+│    │                                                   │
+│    └── Chain B: Phaser Group                           │
+│         └── Nested Rack: PH-90 (100% Wet) // Empty     │
+│              (Controlled by 'PH Mix' Macro Crossfade)  │
+│    *Role: Studio-grade independent parallel modulation.│
 └────────────────────────────────────────────────────────┘
     │
     ▼
@@ -93,12 +98,12 @@ A comprehensive, low-overhead signal routing blueprint designed for Ableton Live
 
 ### Macro Control Layout
 To mimic physical pedalboard control, map the parent Ableton Audio Effect Rack macros as follows:
-* **Macro 1:** Drive Bypass (`Scream 4` On/Off)
-* **Macro 2:** Modulation Bypass (`CF-101 / PH-90` On/Off)
-* **Macro 3:** Space Bypass (`The Echo` & `RV7000` On/Off)
-* **Macro 4:** Expression Pedal Destination (`Pulveriser` Filter Frequency)
+* **Macro 1 (`CF Mix`):** Inverted crossfade controlling the nested CF-101 parallel dry/wet sub-chain volumes.
+* **Macro 2 (`PH Mix`):** Inverted crossfade controlling the nested PH-90 parallel dry/wet sub-chain volumes.
+* **Macro 3:** Drive Bypass (`Scream 4` On/Off)
+* **Macro 4:** Space Bypass (`The Echo` & `RV7000` On/Off)
+* **Macro 5:** Expression Pedal Destination (`Pulveriser` Filter Frequency)
 
 ### Critical Technical Rules
 1. **Disable Cab Sim in Softube:** Ensure internal cabinet emulation is turned off inside the Softube Guitar Amp plugin so that **Lancaster Pulse** handles the IR loading exclusively.
-2. **Modulation Placement:** Keep modulation strictly post-cab to prevent nonlinear clipping artifacts from destroying high-end definition.
-3. **Single CF-101 Utilization:** Do not stack chorus and flanger simultaneously. Use a single CF-101 instance and toggle modes dynamically based on track requirements.
+2. **Modulation Placement & Routing:** Keep modulation strictly post-cab and routed in parallel sub-racks. Do not stack chorus and flanger simultaneously—use a single CF-101 instance and toggle its mode dynamically.
