@@ -40,3 +40,10 @@
 * **Limiter:** Brickwall safety ceiling set strictly to **-1.0 dB** with 0.0 dB gain
 * **Voxengo SPAN:** Configured with a 4.5 dB/octave tilt slope and high-resolution FFT for spectral analysis
 * **Youlean Loudness Meter:** Set for integrated LUFS and True Peak verification
+
+---
+
+## 4. Default Gain Staging & Fader Calibration
+
+* **Initial Fader Starting Points:** Set core track faders (guitars, vocals, acoustic simulator) between **-6.0 dB and -10.0 dB** by default.
+* **Purpose:** Preserves headroom during the tracking and sketching phase, prevents premature summing bus crowding, and avoids hitting the master limiter prematurely while keeping fader resolution optimal.
