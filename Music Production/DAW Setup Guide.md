@@ -22,7 +22,7 @@ This guide outlines your professional audio production toolkit and the required 
 | **Analysis** | Voxengo SPAN, Youlean Loudness | Spectral analysis & LUFS metering. |
 | **Bundles** | UAD Explore, Komplete Start | Acoustic, percussion, & sound design libraries. |
 | **Live Content** | Ableton Live Standard Packs | Core instruments, loops, & samples. |
-
+| **Stem Separation** | Ultimate Vocal Remover (UVR5)  | Generate separate musical parts audio files.    |
 ---
 
 ## 3. Workflow Logic
