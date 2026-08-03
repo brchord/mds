@@ -24,7 +24,7 @@ Apply these native devices in order:
 
 ### C. Saturation / Tape Emulation (Optional)
 - **Goal:** Introduce analog warmth, harmonic saturation, and natural transient rounding before compression.
-- **Settings:** Use Ableton's **Saturation** device set to the **Tape** curve with a conservative **Drive** setting.
+- **Settings:** Use *CHOWTapeModel* effect plugin to simulate tape saturation.
 
 ### D. Glue Compressor (Glue Stage)
 - **Goal:** Unify the mix and provide rhythmic "glue" reacting to the pre-warmed transients.
