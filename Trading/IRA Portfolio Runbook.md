@@ -1,7 +1,7 @@
 # IRA Portfolio — Operational Runbook
 
 **Status:** Working specification / design baseline  
-**Purpose:** Preserve the IRA architecture and operating rules independently from the taxable $7M portfolio.
+**Purpose:** Preserve the IRA architecture and operating rules independently from the taxable portfolio.
 
 > **Important:** This document records the architecture developed in our analysis. Verify current broker rules, option permissions, tax treatment, and contract specifications before implementation.
 
@@ -9,7 +9,7 @@
 
 ## 1. Portfolio objective
 
-The IRA is designed separately from the taxable $7M portfolio.
+The IRA is designed separately from the taxable portfolio.
 
 Its objectives are:
 
